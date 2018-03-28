@@ -29,6 +29,7 @@ public class SingleLinkedList {
                 case 2:
                     System.out.println("Enter the data");
                     userInput = sc.nextInt();
+                    sizeOflinkedList = singleLinkedList.traverseLinkedList(header);
                     System.out.println("Enter thr position where you want to insert the data");
                     int position = sc.nextInt();
                     if (position < sizeOflinkedList) {
@@ -36,9 +37,8 @@ public class SingleLinkedList {
                         header = singleLinkedList.insertInMiddle(header, newNode, position);
                         sizeOflinkedList = singleLinkedList.traverseLinkedList(header);
                     } else {
-                        System.out.println("This position isinked list");
+                        System.out.println("This position is not present in linked list");
                     }
-
                     break;
                 case 3:
                     System.out.println("Enter the data");
@@ -49,12 +49,10 @@ public class SingleLinkedList {
                     break;
             }
         } while (userchoice < 6);
-
-
     }
 
     ListNode insertAtBeginning(ListNode node, ListNode newNode) {
-        if (node == null) { // case when it is an empty linked list
+        if (node.getData() == null) { // case when it is an empty linked list
             newNode.setNext(null);
         } else {
             newNode.setNext(node);
@@ -64,20 +62,21 @@ public class SingleLinkedList {
 
     ListNode insertAtEnd(ListNode node, ListNode newNode) {
         ListNode tempNode = node; // store the header
-        while (node.getNext() != null) {
-            node = node.getNext();
+        if(node.getData() == null){
+            tempNode = newNode;
+        }else{
+            while (node.getNext() != null) {
+                node = node.getNext();
+            }
+            node.setNext(newNode);
         }
-
-        node.setNext(newNode);
-        node.setData(newNode.getData());
-
         return tempNode;
     }
 
     ListNode insertInMiddle(ListNode node, ListNode newNode, int position) {
         ListNode tempNode = node; // store the header
         int pos = 0;
-        while (node.getNext() != null && pos < 6) {
+        while (node != null ) {
             pos++;
             if (pos == position) {
 //                    tempNode = node;
@@ -92,7 +91,7 @@ public class SingleLinkedList {
 
     int traverseLinkedList(ListNode header) {
         int size = 0;
-        while (header.getNext() != null) {
+        while (header != null) {
             System.out.print(header.getData() + " -> ");
             header = header.getNext();
             size++;
